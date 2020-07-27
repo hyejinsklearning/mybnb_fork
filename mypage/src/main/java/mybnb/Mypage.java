@@ -20,6 +20,7 @@ public class Mypage {
     private String usedate;
     private Integer score;
     private String status;
+    private String couponCode;
 
     public Long getId() {
         return id;
@@ -107,5 +108,13 @@ public class Mypage {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
     }
 }

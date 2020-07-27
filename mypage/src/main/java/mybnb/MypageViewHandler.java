@@ -97,4 +97,40 @@ public class MypageViewHandler {
         }
     }
 
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenCouponIssued_then_UPDATE_4(@Payload CouponIssued couponIssued) {
+        try {
+            if (couponIssued.isMe()) {
+                // view 객체 조회
+                List<Mypage> mypageList = mypageRepository.findByBookId(couponIssued.getBookId());
+                for(Mypage mypage : mypageList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    mypage.setCouponCode(couponIssued.getCouponCode());
+                    // view 레파지 토리에 save
+                    mypageRepository.save(mypage);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenCouponCanceled_then_UPDATE_5(@Payload CouponCanceled couponCanceled) {
+        try {
+            if (couponCanceled.isMe()) {
+                // view 객체 조회
+                List<Mypage> mypageList = mypageRepository.findByBookId(couponCanceled.getBookId());
+                for(Mypage mypage : mypageList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    mypage.setCouponCode(null);
+                    // view 레파지 토리에 save
+                    mypageRepository.save(mypage);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

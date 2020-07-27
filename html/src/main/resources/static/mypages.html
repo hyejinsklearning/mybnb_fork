@@ -5,6 +5,9 @@
     <title>Mybnb.com (공유 숙소 서비스 따라하기)</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script type="text/javascript">
+    $(document).ready(function(){
+         $("#header").load("header.html")
+    });
 
     jQuery(document).ready(function(){
         loadMypages();
@@ -48,13 +51,14 @@
                                 .append($('<td>').text(mypage.score == null ? "-" : mypage.score))
                                 .append($('<td>').text(mypage.bookId))
                                 .append($('<td>').text(mypage.guest))
-                                .append($('<td>').text(mypage.usedate))
+                                .append($('<td>').text(mypage.usedate + ""))
                                 .append($('<td>').text(mypage.roomId))
                                 .append($('<td>').text(mypage.name + ""))
                                 .append($('<td>').text(mypage.price))
                                 .append($('<td>').text(mypage.address))
                                 .append($('<td>').text(mypage.host))
-                                .append($('<td>').append($('<a>').attr('href', "javascript:openReviewAddView('"+mypage.status+"','"+mypage.bookId+"')").text('리뷰작성')))
+<!--                                .append($('<td>').append($('<a>').attr('href', "javascript:openReviewAddView('"+mypage.status+"','"+mypage.bookId+"')").text('리뷰작성')))-->
+                                .append($('<td>').text(mypage.couponCode == null ? "-" : mypage.couponCode))
                             );
                     }
                 }
@@ -80,13 +84,7 @@
 
 </head>
 <body>
-<h1><a href="index.html">Mybnb.com (공유 숙소 서비스 따라하기)</a></h1>
-<a href="rooms.html">숙소관리</a>
-<a href="bookings.html">예약현황</a>
-<a href="payments.html">결제이력</a>
-<a href="mypages.html">마이페이지</a>
-<a href="reviews.html">리뷰이력</a>
-<a href="alarms.html">알림이력</a>
+<div id="header"></div>
 
 <h2>마이페이지</h2>
 <div style="width:100%; text-align:right;"><button id="btnMypages">새로고침</button></div>
@@ -104,7 +102,9 @@
         <th>숙소 가격</th>
         <th>숙소 주소</th>
         <th>숙소 호스트</th>
-        <th>리뷰작성하기</th>
+<!--        <th>리뷰작성하기</th>-->
+        <th>쿠폰</th>
+
     </tr>
     </thead>
     <tbody>

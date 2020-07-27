@@ -36,6 +36,10 @@ spring:
           uri: http://localhost:8087
           predicates:
             - Path=/html/**
+        - id: coupon
+          uri: http://localhost:8088
+          predicates:
+            - Path=/coupons/**
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -82,6 +86,10 @@ spring:
           uri: http://html:8080
           predicates:
             - Path=/html/**
+        - id: coupon
+          uri: http://coupon:8080
+          predicates:
+            - Path=/coupons/**
       globalcors:
         corsConfigurations:
           '[/**]':

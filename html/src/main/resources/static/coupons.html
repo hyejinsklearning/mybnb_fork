@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Mybnb.com (공유 숙소 서비스 따라하기)</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+         $("#header").load("header.html")
+    });
+
+    jQuery(document).ready(function(){
+        loadCoupons();
+
+        $("#btnCoupons").click(function() {
+            loadCoupons();
+        });
+    });
+
+    function loadCoupons() {
+        $('#tblCoupons tbody').empty();
+
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            dataType: 'json',
+            url: "/coupons",
+            success: function(result){
+                console.log(result);
+                var coupons = result._embedded.coupons;
+
+                if(coupons.length < 1 ){
+                    $('#tblCoupons > tbody:last-child')
+                        .append($('<tr>').attr('style', 'text-align:center;')
+                            .append($('<td>').attr('colspan', '10').text('NO DATA'))
+                        );
+                }
+                else {
+                    for(var i=0; i<coupons.length; i++){
+                        var coupon = coupons[i];
+                        var couponhref = coupon._links.coupon.href;
+
+                        var tmp = couponhref.split("/");
+                        var couponId = tmp[tmp.length-1];
+
+                        $('#tblCoupons > tbody:last-child')
+                            .append($('<tr>').attr('style', 'text-align:center;')
+                                .append($('<td>').text(couponId))
+                                .append($('<td>').text(coupon.bookId))
+                                .append($('<td>').text(coupon.couponCode == null ? "발행취소" : coupon.couponCode))
+                                .append($('<td>').text(coupon.status))
+                            );
+                    }
+                }
+            },
+            error: function (status) {
+                $('#tblCoupons > tbody:last-child')
+                    .append($('<tr>').attr('style', 'text-align:center; color:red;')
+                        .append($('<td>').attr('colspan', '10').text('조회 실패'))
+                    );
+             }
+        });
+    }
+
+    </script>
+
+</head>
+<body>
+<div id="header"></div>
+
+<h2>쿠폰함</h2>
+<div style="width:100%; text-align:right;"><button id="btnCoupons">새로고침</button></div>
+<table id="tblCoupons" style="width: 100%; border:1px solid black; margin-top:5px;">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>예약 ID</th>
+        <th>쿠폰코드</th>
+        <th>상태</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+</body>
+</html>
+
