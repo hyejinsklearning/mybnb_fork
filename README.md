@@ -271,7 +271,7 @@ public interface PaymentRepository extends PagingAndSortingRepository<Payment, L
 ```
 - siege 접속
 ```
-kubctl exec -it siege -n mybnb -- /bin/bash
+kubectl exec -it siege -n mybnb -- /bin/bash
 ```
 
 - 적용 후 REST API 테스트 (siege 에서)
